@@ -37,7 +37,7 @@ jobs:
           done
 
       - id: validation1
-        uses: microsoft/template-validation-action@main
+        uses: microsoft/template-validation-action@zhihuan/interface
         with:
           workingDirectory: ${{ runner.temp }}/template
         env:
@@ -47,7 +47,7 @@ jobs:
         run: cat ${{ steps.validation1.outputs.resultFile }}
 
       - id: validation2
-        uses: microsoft/template-validation-action@main
+        uses: microsoft/template-validation-action@zhihuan/interface
         with:
           workingDirectory: ${{ runner.temp }}/template
           validateAzd: false
@@ -61,7 +61,7 @@ jobs:
         run: cat ${{ steps.validation2.outputs.resultFile }}
 
       - id: validation3
-        uses: microsoft/template-validation-action@main
+        uses: microsoft/template-validation-action@zhihuan/interface
         with:
           workingDirectory: ${{ runner.temp }}/template
           validatePaths: ""

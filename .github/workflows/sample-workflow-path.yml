@@ -42,6 +42,7 @@ jobs:
           workingDirectory: ${{ runner.temp }}/template
         env:
           REPOSITORY_NAME: Azure-Samples/azd-ai-starter
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: print result
         run: cat ${{ steps.validation1.outputs.resultFile }}
@@ -52,10 +53,11 @@ jobs:
           workingDirectory: ${{ runner.temp }}/template
           validateAzd: false
           validatePaths: "README.md, .devcontainer, azure.yaml, NON_EXISTENT_FILE"
-          expectedTopics: "ai-azd-templates, azd-templates"
+          topics: "ai-azd-templates, azd-templates"
         env:
           REPOSITORY_NAME: Azure-Samples/azd-ai-starter
           README_H2_TAGS: "## Features, ## Get Started"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: print result
         run: cat ${{ steps.validation2.outputs.resultFile }}
@@ -65,10 +67,11 @@ jobs:
         with:
           workingDirectory: ${{ runner.temp }}/template
           validatePaths: ""
-          expectedTopics: ""
+          topics: ""
           useDevContainer: true
         env:
           REPOSITORY_NAME: Azure-Samples/azd-ai-starter
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: print result
         run: cat ${{ steps.validation3.outputs.resultFile }}

@@ -40,8 +40,8 @@ jobs:
         uses: microsoft/template-validation-action@zhihuan/interface
         with:
           workingDirectory: ${{ runner.temp }}/template
-          validatePaths: ""
-          topics: ""
+          validatePaths: "None"
+          topics: "None"
           validateAzd: false
           useDevContainer: false
         env:

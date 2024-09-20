@@ -66,9 +66,9 @@ jobs:
         uses: microsoft/template-validation-action@zhihuan/interface
         with:
           workingDirectory: ${{ runner.temp }}/template
-          validatePaths: ""
-          topics: ""
-          useDevContainer: true
+          validatePaths: "None"
+          topics: "None"
+          useDevContainer: false
         env:
           REPOSITORY_NAME: Azure-Samples/azd-ai-starter
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

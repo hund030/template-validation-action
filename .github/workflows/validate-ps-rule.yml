@@ -10,15 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     name: template validation
     steps:
-      - uses: actions/checkout@v4
-
       - name: Clone repo
         working-directory: ${{ runner.temp }}
         run: |
           git clone https://github.com/Azure-Samples/azd-ai-starter template
 
       - id: validation
-        uses: microsoft/template-validation-action@/main
+        uses: hund030/template-validation-action@/demo
         with:
           workingDirectory: ${{ runner.temp }}/template
           validateAzd: false

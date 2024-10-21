@@ -57,18 +57,17 @@ runs:
       if: ${{ inputs.securityAction == 'PSRule' }}
       id: calculate_relative_paths
       run: |
-        mkdir -p ${{ github.run_id }}/template
-        cp -a ${{ inputs.workingDirectory }}/. ${{ github.run_id }}/template
-        echo "relative_working_directory=${{ github.run_id }}/template" >> $GITHUB_ENV
+        working_directory="${{ inputs.workingDirectory }}"
+        relative_working_directory=$(realpath --relative-to="${{ github.workspace }}" "$working_directory")
+        relative_source=$(realpath --relative-to="$relative_working_directory" "${{ github.action_path }}/.ps-rule")
+        echo "relative_working_directory=$relative_working_directory" >> $GITHUB_ENV
+        echo "relative_source=$relative_source" >> $GITHUB_ENV
       shell: bash
 
     - name: Prepare PSRule for Azure
       if: ${{ inputs.securityAction == 'PSRule' }}
       id: prepare_psrule
       run: |
-        rm -rf ${{ env.relative_working_directory }}/.ps-rule
-        mkdir -p ${{ env.relative_working_directory }}/.ps-rule
-        cp ${{ github.action_path }}/.ps-rule/templateCustom.Rule.yaml ${{ env.relative_working_directory }}/.ps-rule/templateCustom.Rule.yaml
         cp ${{ github.action_path}}/ps-rule.yaml ${{ env.relative_working_directory }}
         cd ${{ env.relative_working_directory }}
         python3 ${{ github.action_path }}/scripts/generate-bicep-test.py 
@@ -82,6 +81,7 @@ runs:
       with:
         inputType: inputPath
         path: ${{ env.relative_working_directory }}
+        source: ${{ env.relative_source }}
         modules: 'PSRule.Rules.Azure'
         baseline: 'TemplateValidation.MI_2024_10'
         outputFormat: "json"
